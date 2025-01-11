@@ -1,6 +1,5 @@
 ﻿using NAudio.Wave;
-using System;
-using System.Threading;
+using NAudio.Wave.SampleProviders;
 
 class Program
 {
@@ -19,11 +18,11 @@ class Program
         };
 
         Console.WriteLine("Reproduciendo escala musical...");
-        
+
         foreach (var nota in notas)
         {
             Console.WriteLine($"Reproduciendo {nota.Key} ({nota.Value} Hz)");
-            
+
             var sineWaveProvider = new SignalGenerator()
             {
                 Gain = 0.2,
@@ -31,7 +30,8 @@ class Program
                 Type = SignalGeneratorType.Sin
             };
 
-            using (var waveOut = new WaveOut())
+            // Cambia WaveOut por WaveOutEvent
+            using (var waveOut = new WaveOutEvent())
             {
                 waveOut.Init(sineWaveProvider);
                 waveOut.Play();
