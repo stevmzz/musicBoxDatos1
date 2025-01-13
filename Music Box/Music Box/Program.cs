@@ -1,10 +1,38 @@
 ﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using Music_Box.Models;
+using Music_Box.Services;
 
 class Program
 {
     static void Main()
     {
+
+        // Crear la lista enlazada
+        var playlist = new DoublyLinkedList();
+
+        // Pedir entrada al usuario
+        Console.WriteLine("Ingrese las notas en el formato (Nota, Figura), separadas por comas:");
+        string input = Console.ReadLine();
+
+        // Parsear las notas
+        var notes = Parser.ParseNotes(input);
+
+        // Añadir cada nota a la lista enlazada
+        foreach (var note in notes)
+        {
+            playlist.addNote(note);
+        }
+
+        Console.WriteLine($"Se añadieron {playlist.GetCount()} notas a la lista.");
+
+        // Opcional: mostrar las notas añadidas
+        var current = playlist.GetFirst();
+        while (current != null)
+        {
+            Console.WriteLine($"Nota: {current.Data.NoteName}, Duración: {current.Data.Duration}");
+            current = current.Next;
+        }
         // Frecuencias de las notas (en Hz)
         var notas = new Dictionary<string, double>
         {
@@ -43,6 +71,8 @@ class Program
         }
 
         Console.WriteLine("¡Escala completada!");
+        // Imprimir la lista enlazada
+        playlist.PrintList();
         Console.ReadLine();
     }
 }
