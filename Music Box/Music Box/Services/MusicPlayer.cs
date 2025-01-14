@@ -28,7 +28,7 @@ namespace Music_Box.Services {
             return true;
         }
 
-        private void PlaySingleNote(Note note) { // método para reproducir una nota
+        public void PlaySingleNote(Note note) { // método para reproducir una nota
         
             var sineWaveProvider = new SignalGenerator() { // crea un generador de ondas
             

@@ -40,6 +40,17 @@ class Program {
                 case "3": // reproducir hacia atrás
 
                 case "4": // configurar tempo
+                    Console.WriteLine("Ingrese la duración de la negra en segundos (0.1 a 5.0): ");
+                    if (float.TryParse(Console.ReadLine(), out float tempo)) { // si convierte el valor ingresado a float
+                        if (player.setTempo(tempo)) { // si se logra establecer como tempo
+                            Console.WriteLine("Tempo actualizado.");
+                        }
+                        
+                        else {
+                            Console.WriteLine("El tempo debe estar entre 0.1 y 5.0 segundos.");
+                        }
+                    }
+                    break;
 
                 case "5": // mostrar partitura actual
                     playlist.PrintList();
