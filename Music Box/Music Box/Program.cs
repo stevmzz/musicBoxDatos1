@@ -45,7 +45,7 @@ class Program {
 
                 case "4": // configurar tempo
                     Console.WriteLine("Ingrese la duración de la negra en segundos (0.1 a 5.0): ");
-                    if (float.TryParse(Console.ReadLine(), out float tempo)) { // si convierte el valor ingresado a float
+                    if (float.TryParse(Console.ReadLine(), out float tempo)) { // se convierte el valor ingresado a float
                         if (player.setTempo(tempo)) { // si se logra establecer como tempo
                             Console.WriteLine("Tempo actualizado.");
                         }

@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using Music_Box.Models;
 using Music_Box.Services;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Music_Box.Tests
 {
@@ -76,5 +78,89 @@ namespace Music_Box.Tests
             // Act & Assert: la reproducción no debe lanzar excepciones
             Assert.DoesNotThrow(() => player.PlaySingleNote(note));
         }
+
+        [Test] // Prueba para ParseNotes
+        public void ParseNotes_Test()
+        {
+            // Arrange
+            string input = "(Do, negra), (Re, blanca), (Mi, corchea)";
+
+            // Act
+            List<Note> notes = Parser.ParseNotes(input);
+
+            // Assert
+            Assert.AreEqual(3, notes.Count);
+            Assert.AreEqual("Do", notes[0].NoteName);
+            Assert.AreEqual("negra", notes[0].Duration);
+            Assert.AreEqual("Re", notes[1].NoteName);
+            Assert.AreEqual("blanca", notes[1].Duration);
+            Assert.AreEqual("Mi", notes[2].NoteName);
+            Assert.AreEqual("corchea", notes[2].Duration);
+        }
+
+        [Test] // Prueba para PlayForward
+        public void PlayForward_ValidPlaylist_ReplaysAllNotes()
+        {
+            // Arrange
+            var playlist = new DoublyLinkedList();
+            playlist.addNote(new Note("Do", "negra"));
+            playlist.addNote(new Note("Re", "blanca"));
+            playlist.addNote(new Note("Mi", "corchea"));
+            var player = new MusicPlayer(playlist);
+
+            // Act & Assert: la reproducción no debe lanzar excepciones
+            Assert.DoesNotThrow(() => player.PlayForward());
+        }
+
+        [Test] // Prueba para PlayBackward
+        public void PlayBackward_Test()
+        {
+            // Arrange
+            var playlist = new DoublyLinkedList();
+            playlist.addNote(new Note("Do", "negra"));
+            playlist.addNote(new Note("Re", "blanca"));
+            playlist.addNote(new Note("Mi", "corchea"));
+            var player = new MusicPlayer(playlist);
+
+            // Act & Assert: la reproducción no debe lanzar excepciones
+            Assert.DoesNotThrow(() => player.PlayBackward());
+        }
+
+        [Test] // Prueba para setTempo
+        public void SetTempo_Test()
+        {
+            // Arrange
+            var player = new MusicPlayer(new DoublyLinkedList());
+
+            // Act & Assert
+            Assert.IsTrue(player.setTempo(1.0f));  // Dentro del rango válido
+            Assert.IsFalse(player.setTempo(0.05f)); // Fuera del rango (muy bajo)
+            Assert.IsFalse(player.setTempo(10.0f)); // Fuera del rango (muy alto)
+        }
+
+        [Test] // Prueba para PrintList
+        public void PrintList_Test()
+        {
+            // Arrange
+            var playlist = new DoublyLinkedList();
+            playlist.addNote(new Note("Do", "negra"));
+            playlist.addNote(new Note("Re", "blanca"));
+            playlist.addNote(new Note("Mi", "corchea"));
+
+            using (var sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+
+                // Act
+                playlist.PrintList();
+
+                // Assert
+                var output = sw.ToString().Trim();
+                StringAssert.Contains("Nota: Do, Duración: negra", output);
+                StringAssert.Contains("Nota: Re, Duración: blanca", output);
+                StringAssert.Contains("Nota: Mi, Duración: corchea", output);
+            }
+        }
+
     }
 }
