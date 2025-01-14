@@ -36,8 +36,12 @@ class Program {
                     break;
 
                 case "2": // reproducir hacia adelante
+                    player.PlayForward();
+                    break;
 
                 case "3": // reproducir hacia atrás
+                    player.PlayBackward();
+                    break;
 
                 case "4": // configurar tempo
                     Console.WriteLine("Ingrese la duración de la negra en segundos (0.1 a 5.0): ");
