@@ -47,12 +47,39 @@ namespace Music_Box.Services {
             Thread.Sleep(50);
         }
 
-        public void PlayForward() { // método para moverse hacia adelante
-        
+        public void PlayForward()
+        {
+            var current = playlist.GetFirst(); // Comenzar desde el inicio de la lista
+            if (current == null)
+            {
+                Console.WriteLine("La lista está vacía. No hay notas para reproducir.");
+                return;
+            }
+
+            Console.WriteLine("Reproduciendo hacia adelante:");
+            while (current != null)
+            {
+                PlaySingleNote(current.Data); // Reproducir la nota
+                current = current.Next; // Mover al siguiente nodo
+            }
         }
 
-        public void PlayBackward() { // método para moverse hacia atrás
-        
+        public void PlayBackward()
+        {
+            var current = playlist.GetLast(); // Comenzar desde el final de la lista
+            if (current == null)
+            {
+                Console.WriteLine("La lista está vacía. No hay notas para reproducir.");
+                return;
+            }
+
+            Console.WriteLine("Reproduciendo hacia atrás:");
+            while (current != null)
+            {
+                PlaySingleNote(current.Data); // Reproducir la nota
+                current = current.Previus; // Mover al nodo anterior
+            }
         }
+
     }
 }
