@@ -55,5 +55,26 @@ namespace Music_Box.Models {
         public bool IsEmpty() {
             return Count == 0;
         }
+
+        public void PrintList()
+        {
+            if (IsEmpty())
+            {
+                Console.WriteLine("La lista está vacía.");
+                return;
+            }
+
+            Console.WriteLine("Contenido de la lista enlazada:");
+            var current = Head;
+            int index = 1;
+
+            while (current != null)
+            {
+                Console.WriteLine($"[{index}] Nota: {current.Data.NoteName}, Duración: {current.Data.Duration}");
+                current = current.Next;
+                index++;
+            }
+        }
+
     }
 }

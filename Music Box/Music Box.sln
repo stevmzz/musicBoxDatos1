@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Music Box", "Music Box\Music Box.csproj", "{AD20984A-55CF-4B41-9BAE-71DFD460E449}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Music-Box.Tests", "Music-Box.Tests\Music-Box.Tests.csproj", "{EA007EF0-6A90-4040-9042-79B14CD4B11E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{AD20984A-55CF-4B41-9BAE-71DFD460E449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD20984A-55CF-4B41-9BAE-71DFD460E449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD20984A-55CF-4B41-9BAE-71DFD460E449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA007EF0-6A90-4040-9042-79B14CD4B11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA007EF0-6A90-4040-9042-79B14CD4B11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA007EF0-6A90-4040-9042-79B14CD4B11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA007EF0-6A90-4040-9042-79B14CD4B11E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

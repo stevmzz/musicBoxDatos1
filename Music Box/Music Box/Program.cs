@@ -1,52 +1,79 @@
-﻿using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
+﻿using Music_Box.Models;
+using Music_Box.Services;
 
-class Program
-{
-    static void Main()
-    {
-        // Frecuencias de las notas (en Hz)
-        var notas = new Dictionary<string, double>
-        {
-            {"Do", 261.63},
-            {"Re", 293.66},
-            {"Mi", 329.63},
-            {"Fa", 349.23},
-            {"Sol", 392.00},
-            {"La", 440.00},
-            {"Si", 493.88}
-        };
+class Program {
+    static void Main() {
+        Console.WriteLine("---------MusicBox Iniciado---------");
+        var playlist = new DoublyLinkedList(); // Crear la lista enlazada
+        var player = new MusicPlayer(playlist);
+        bool running = true;
+        player.setTempo(1.0f); // establece tiempo inicial en 1 segundo
 
-        Console.WriteLine("Reproduciendo escala musical...");
+        while (running) {
 
-        foreach (var nota in notas)
-        {
-            Console.WriteLine($"Reproduciendo {nota.Key} ({nota.Value} Hz)");
+            Console.WriteLine("\nMusicBox - Menú Principal");
+            Console.WriteLine("1. Ingresar partitura");
+            Console.WriteLine("2. Reproducir hacia adelante");
+            Console.WriteLine("3. Reproducir hacia atrás");
+            Console.WriteLine("4. Configurar tempo");
+            Console.WriteLine("5. Mostrar partitura actual");
+            Console.WriteLine("6. Salir");
 
-            var sineWaveProvider = new SignalGenerator()
-            {
-                Gain = 0.2,
-                Frequency = nota.Value,
-                Type = SignalGeneratorType.Sin
-            };
+            Console.Write("\nSeleccione una opción: ");
+            string opcion = Console.ReadLine();
 
-            // Cambia WaveOut por WaveOutEvent
-            using (var waveOut = new WaveOutEvent())
-            {
-                waveOut.Init(sineWaveProvider);
-                waveOut.Play();
-                Thread.Sleep(500); // Duración de cada nota (500ms)
-                waveOut.Stop();
+            switch (opcion) {
+
+                case "1": // ingresar partitura
+                    Console.WriteLine("Ingrese las notas en el formato (Nota, Figura), separadas por comas:"); // Pedir entrada al usuario
+                    string input = Console.ReadLine();
+                    var notes = Parser.ParseNotes(input); // Parsear las notas
+                    
+                    foreach (var note in notes) { // Añadir cada nota a la lista enlazada
+                        playlist.addNote(note);
+                    }
+                    Console.WriteLine($"Se añadieron {playlist.GetCount()} notas a la lista.");
+                    break;
+
+                case "2": // reproducir hacia adelante
+                    player.PlayForward();
+                    break;
+
+                case "3": // reproducir hacia atrás
+                    player.PlayBackward();
+                    break;
+
+                case "4": // configurar tempo
+                    Console.WriteLine("Ingrese la duración de la negra en segundos (0.1 a 5.0): ");
+                    if (float.TryParse(Console.ReadLine(), out float tempo)) { // se convierte el valor ingresado a float
+                        if (player.setTempo(tempo)) { // si se logra establecer como tempo
+                            Console.WriteLine("Tempo actualizado.");
+                        }
+                        
+                        else {
+                            Console.WriteLine("El tempo debe estar entre 0.1 y 5.0 segundos.");
+                        }
+                    }
+                    break;
+
+                case "5": // mostrar partitura actual
+                    playlist.PrintList();
+                    break;
+
+                case "6": // salir
+                    running = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Opción no válida.");
+                    break;
+
             }
-
-            Thread.Sleep(100); // Pequeña pausa entre notas
+            if (running) {
+                Console.WriteLine("\nPresione Enter para continuar...");
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
-
-        Console.WriteLine("¡Escala completada!");
-        Console.ReadLine();
     }
 }
-
-////////////// AQUÍ IRÁ EL MENÚ PRINCIPAL //////////////////////////////////////////
-
-////////////// REMPLAZAR //////////////////////////////////////////
